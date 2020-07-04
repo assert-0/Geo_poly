@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall
+CXXFLAGS = -Wall -std=c++17
 
 INCLUDE_DIRS = -I./include
 LIB_DIRS = -L./lib
