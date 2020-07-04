@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1593878209 source:c:\c++\official\geo_poly\src\main.cxx
+1593896486 source:c:\c++\official\geo_poly\src\main.cxx
 	<cstdio>
 	<cstdlib>
 	<ctime>
@@ -7,5 +7,6 @@
 	<vector>
 	<chrono>
 	<thread>
+	<windows.h>
 	<GeographicLib/Geodesic.hpp>
 

@@ -76,25 +76,22 @@ void input()
 
 void process()
 {
-    double la1, lo1, la2, lo2;
-    int it = 0;
+    double la1, lo1, la2, lo2, heading = 0.0;
 
     la1 = g_laIn.toFloat();
     lo1 = g_loIn.toFloat();
 
     printf("Processing...\n");
 
-    for
-    (
-        double heading = 0.0; heading <= 360.0;
-        heading += floor(360.0 / (double)g_numPoints)
-    )
+    for(int a = 0; a < g_numPoints; a++)
     {
         g_geodesic.Direct(la1, lo1, heading, g_radius, la2, lo2);
-        g_coords[it].first.toDMS(la2);
-        g_coords[it].second.toDMS(lo2);
-        it++;
+        g_coords[a].first.toDMS(la2);
+        g_coords[a].second.toDMS(lo2);
+        heading += floor(360.0 / (double)g_numPoints);
     }
+
+    printf("Done processing!\n");
 }
 
 void output()
@@ -109,12 +106,27 @@ void output()
         g_file = fopen(g_outFileName, "w");
     }
 
+    printf("Saving results...\n");
+
+    fprintf(g_file, "radius\n%g km\n", g_radius);
+    fprintf(g_file, "center coordinates\n");
+    fprintf(g_file, "d,m,s,,d,m,s\n");
+    fprintf
+    (
+        g_file,
+        "%.0lf,%.0lf,%.0lf,,%.0lf,%.0lf,%.0lf\n\n\n",
+        g_laIn.d, g_laIn.m, g_laIn.s,
+        g_loIn.d, g_loIn.m, g_loIn.s
+    );
+
+    fprintf(g_file, "vertex coordinates\n");
+    fprintf(g_file, "d,m,s,,d,m,s\n");
     for(int a = 0; a < g_numPoints; a++)
     {
         fprintf
         (
             g_file,
-            "%lf,%lf,%lf,,%lf,%lf,%lf\n",
+            "%.0lf,%.0lf,%.0lf,,%.0lf,%.0lf,%.0lf\n",
             g_coords[a].first.d,
             g_coords[a].first.m,
             round(g_coords[a].first.s),
@@ -124,7 +136,7 @@ void output()
         );
     }
 
-    printf("Results successfully saved in file %s.\n", g_outFileName);
+    printf("Results successfully saved in file %s!\n", g_outFileName);
     printf("Done!\n");
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
