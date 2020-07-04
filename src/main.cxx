@@ -7,6 +7,8 @@
 #include <chrono>
 #include <thread>
 
+#include <windows.h>
+
 #include <GeographicLib/Geodesic.hpp>
 
 #define PRINT_SEPARATOR printf("----------------------------\n")
@@ -44,8 +46,6 @@ double g_radius;
 int g_numPoints;
 std::vector< std::pair<DMS, DMS> > g_coords;
 
-bool g_quit = false;
-
 //file name and handle
 const char *g_outFileName = "coords.csv";
 FILE *g_file;
@@ -77,13 +77,37 @@ void input()
 void process()
 {
     double la1, lo1, la2, lo2;
+    int it = 0;
+
+    la1 = g_laIn.toFloat();
+    lo1 = g_loIn.toFloat();
 
     printf("Processing...\n");
+
+    for
+    (
+        double heading = 0.0; heading <= 360.0;
+        heading += floor(360.0 / (double)g_numPoints)
+    )
+    {
+        g_geodesic.Direct(la1, lo1, heading, g_radius, la2, lo2);
+        g_coords[it].first.toDMS(la2);
+        g_coords[it].second.toDMS(lo2);
+        it++;
+    }
 }
 
 void output()
 {
     g_file = fopen(g_outFileName, "w");
+
+    while(g_file == nullptr)
+    {
+        printf("Error opening output csv file.\n");
+        printf("Please check if the file is open in another program, close the program and try again.\n");
+        system("pause");
+        g_file = fopen(g_outFileName, "w");
+    }
 
     for(int a = 0; a < g_numPoints; a++)
     {
@@ -114,10 +138,6 @@ int main()
     while(1)
     {
         input();
-
-        if(g_quit)
-            return 0;
-
         process();
         output();
     }

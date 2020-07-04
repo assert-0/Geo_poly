@@ -32,7 +32,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Linker>
+			<Add library="Geographic" />
+		</Linker>
+		<Unit filename="src/main.cxx" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
