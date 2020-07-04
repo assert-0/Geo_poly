@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1593872842 source:c:\c++\official\geo_poly\src\main.cxx
+	<cstdio>
+	<GeographicLib/Geodesic.hpp>
+
