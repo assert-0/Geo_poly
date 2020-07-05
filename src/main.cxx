@@ -72,6 +72,7 @@ void input()
     PRINT_SEPARATOR;
 
     g_coords.resize(g_numPoints);
+    g_radius *= 1000.0;
 }
 
 void process()
@@ -108,7 +109,7 @@ void output()
 
     printf("Saving results...\n");
 
-    fprintf(g_file, "radius\n%g km\n", g_radius);
+    fprintf(g_file, "radius\n%g km\n", g_radius / 1000.0);
     fprintf(g_file, "center coordinates\n");
     fprintf(g_file, "d,m,s,,d,m,s\n");
     fprintf
