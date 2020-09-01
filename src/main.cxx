@@ -26,8 +26,10 @@ struct DMS
     void toDMS(double in)
     {
         d = int(in);
-        m = int((in - d) * 60);
-        s = (in - d - (m / 60)) * 3600;
+        m = int((in - d) * 60.0);
+        s = int((in - d - (m / 60.0)) * 3600);
+        if(round(s) >= 60.0) {s = 0.0; m += 1.0;}
+        if(round(m) >= 60.0) {m = 0.0; d += 1.0;}
     }
 
     double toFloat(){ return d + m / 60.0 + s / 3600.0; }
@@ -68,6 +70,8 @@ void input()
         &g_loIn.d, &g_loIn.m, &g_loIn.s,
         &g_radius, &g_numPoints
     );
+
+    fflush(stdin);
 
     PRINT_SEPARATOR;
 
