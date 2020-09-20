@@ -27,7 +27,7 @@ struct DMS
     {
         d = int(in);
         m = int((in - d) * 60.0);
-        s = int((in - d - (m / 60.0)) * 3600);
+        s = (in - d - (m / 60.0)) * 3600;
         if(round(s) >= 60.0) {s = 0.0; m += 1.0;}
         if(round(m) >= 60.0) {m = 0.0; d += 1.0;}
     }
@@ -118,7 +118,7 @@ void output()
 
     fprintf(g_file, "radius\n%g km\n", g_radius / 1000.0);
     fprintf(g_file, "center coordinates\n");
-    fprintf(g_file, "d,m,s,,d,m,s\n");
+    fprintf(g_file, "d,m,s,N,d,m,s,E\n");
     fprintf
     (
         g_file,
@@ -128,7 +128,7 @@ void output()
     );
 
     fprintf(g_file, "vertex coordinates\n");
-    fprintf(g_file, "d,m,s,,d,m,s\n");
+    fprintf(g_file, "d,m,s,N,d,m,s,E\n");
     for(int a = 0; a < g_numPoints; a++)
     {
         fprintf
