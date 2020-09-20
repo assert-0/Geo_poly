@@ -70,6 +70,9 @@ void input()
         &g_loIn.d, &g_loIn.m, &g_loIn.s,
         &g_radius, &g_numPoints
     );
+	
+	g_laIn.toDMS(g_laIn.toFloat());
+	g_loIn.toDMS(g_loIn.toFloat());
 
     fflush(stdin);
 
